@@ -40,22 +40,22 @@ def deleteIter(num, currNode):
     del currNode.data
 def findNextIter(num, currNode):
     maxnum = findMaxIter(currNode)
-    if(num == maxnum):
+    if(num >= maxnum):
         return None
     if(currNode.data < maxnum and currNode.data > num):
         maxnum = currNode.data
     parent = currNode
-    arr = []
-    while(currNode != None):
-        while(currNode != None):
-            if(not(currNode.leftC.data in arr) and currNode.leftC != None):
-                currNode = currNode.leftC
-            elif(not(currNode.rightC.data in arr) and currNode.rightC != None):
-                currNode = currNode.rightC
-            else: break
-        arr.append(currNode.data)
-        if(currNode != None and currNode.data < maxnum and currNode.data > num):
-            maxnum = currNode.data
+    while(currNode.rightC != None or currNode.leftC != None):
+        if(currNode.rightC != None and currNode.data <= num):
+            currNode = currNode.rightC
+            if(currNode.data < maxnum and currNode.data > num):
+                maxnum = currNode.data
+        elif(currNode.leftC != None and currNode.data > num):
+            currNode = currNode.leftC
+            if(currNode.data < maxnum and currNode.data > num):
+                maxnum = currNode.data
+        else: 
+            break
     return maxnum
     
 def findPrevIter(num, currNode):
@@ -64,18 +64,17 @@ def findPrevIter(num, currNode):
         return None
     if(currNode.data > minnum and currNode.data < num):
         minnum = currNode.data
-    parent = currNode
-    arr = []
-    while(currNode != None):
-        while(currNode != None):
-            if(not(currNode.leftC.data in arr) and currNode.leftC != None):
-                currNode = currNode.leftC
-            elif(not(currNode.rightC.data in arr) and currNode.rightC != None):
-                currNode = currNode.rightC
-            else: break
-        arr.append(currNode.data)
-        if(currNode != None and currNode.data > minnum and currNode.data < num):
-            minnum = currNode.data
+    while(currNode.rightC != None or currNode.leftC != None):
+        if(currNode.rightC != None and currNode.data < num):
+            currNode = currNode.rightC
+            if(currNode.data > minnum and currNode.data < num):
+                minnum = currNode.data
+        elif(currNode.leftC != None and currNode.data >= num):
+            currNode = currNode.leftC
+            if(currNode.data > minnum and currNode.data < num):
+                minnum = currNode.data
+        else: 
+            break
     return minnum
 def findMinIter(currNode):
     while(currNode.leftC != None):
